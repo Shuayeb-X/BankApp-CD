@@ -15,6 +15,7 @@ stringData:
 # EBS StorageClass
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
+
 metadata:
   name: ebs-sc
 
@@ -32,6 +33,7 @@ parameters:
 # PersistentVolumeClaim
 apiVersion: v1
 kind: PersistentVolumeClaim
+
 metadata:
   name: mysql-pvc
   namespace: webapps
@@ -47,9 +49,10 @@ spec:
       storage: 5Gi
 
 ---
-# MySQL Deployment
+# Deployment
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
   name: mysql
   namespace: webapps
@@ -107,9 +110,10 @@ spec:
             claimName: mysql-pvc
 
 ---
-# MySQL Service
+# Service
 apiVersion: v1
 kind: Service
+
 metadata:
   name: mysql-service
   namespace: webapps
@@ -128,6 +132,7 @@ spec:
 # HPA
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
+
 metadata:
   name: mysql-hpa
   namespace: webapps
@@ -155,6 +160,7 @@ spec:
 # Ingress
 apiVersion: networking.k8s.io/v1
 kind: Ingress
+
 metadata:
   name: mysql-ingress
   namespace: webapps
@@ -165,7 +171,8 @@ metadata:
 spec:
   ingressClassName: nginx
 
-      http:
+  rules:
+    - http:
         paths:
           - path: /
             pathType: Prefix
