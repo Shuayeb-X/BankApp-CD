@@ -157,10 +157,10 @@ spec:
       containers:
         - name: bankapp
 
-          image: shuayeb/bankapp:latest
+          image: shauyeb009/bankapp:latest
 
           ports:
-            - containerPort: 8080
+            - containerPort: 8083
 
           env:
             - name: DB_HOST
