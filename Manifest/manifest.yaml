@@ -165,9 +165,6 @@ metadata:
 spec:
   ingressClassName: nginx
 
-  rules:
-    - host: mysql.local
-
       http:
         paths:
           - path: /
