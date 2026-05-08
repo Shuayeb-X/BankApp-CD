@@ -157,7 +157,7 @@ spec:
       containers:
         - name: bankapp
 
-          image: shauyeb009/bankapp:latest
+          image: shauyeb009/bankapp:v23
 
           ports:
             - containerPort: 8083
