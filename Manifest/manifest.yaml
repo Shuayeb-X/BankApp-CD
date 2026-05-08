@@ -1,26 +1,25 @@
-
 # Namespace
-
 apiVersion: v1
 kind: Namespace
 metadata:
   name: webapps
 
+---
 # Secret
-
 apiVersion: v1
 kind: Secret
 metadata:
   name: mysql-secret
   namespace: webapps
+
 type: Opaque
 
 stringData:
   MYSQL_ROOT_PASSWORD: root123
   MYSQL_DATABASE: mydb
 
+---
 # EBS StorageClass
-
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
@@ -28,18 +27,16 @@ metadata:
 
 provisioner: ebs.csi.aws.com
 
+reclaimPolicy: Retain
+
 volumeBindingMode: WaitForFirstConsumer
 
 parameters:
   type: gp2
   fsType: ext4
-reclaimPolicy: Retain
-volumeBindingMode: WaitForFirstConsumer
 
-
+---
 # PersistentVolumeClaim
-
-
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
@@ -56,10 +53,8 @@ spec:
     requests:
       storage: 5Gi
 
-
+---
 # MySQL Deployment
-
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -118,9 +113,8 @@ spec:
           persistentVolumeClaim:
             claimName: mysql-pvc
 
-
+---
 # MySQL Service
-
 apiVersion: v1
 kind: Service
 metadata:
@@ -137,10 +131,8 @@ spec:
 
   type: ClusterIP
 
-
+---
 # HPA
-
-
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
@@ -166,9 +158,8 @@ spec:
           type: Utilization
           averageUtilization: 70
 
+---
 # Ingress
-
-
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
